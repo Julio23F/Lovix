@@ -1,75 +1,126 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  Animated,
+  Easing,
+  StatusBar,
+  StyleSheet,
+  View,
+  useWindowDimensions,
+} from 'react-native';
+import {
+  CareView,
+  CenterNextButton,
+  MoodDiaryView,
+  RelaxView,
+  SplashView,
+  TopBackSkipView,
+  WelcomeView,
+} from '../../components/scenes';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+const HomeScreen: React.FC = () => {
+  const navigation = useNavigation();
+  const window = useWindowDimensions();
 
-export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const animationController = useRef<Animated.Value>(new Animated.Value(0));
+  const animValue = useRef<number>(0);
+
+  useEffect(() => {
+    animationController.current.addListener(({ value }) => {
+      animValue.current = value;
+      setCurrentPage(value);
+    });
+  }, []);
+
+  const relaxTranslateY = animationController.current.interpolate({
+    inputRange: [0, 0.2, 0.4, 0.6, 0.8],
+    outputRange: [window.height, 0, 0, 0, 0],
+  });
+
+  const playAnimation = useCallback(
+    (toValue: number, duration: number = 1600) => {
+      Animated.timing(animationController.current, {
+        toValue,
+        duration,
+        easing: Easing.bezier(0.4, 0.0, 0.2, 1.0),
+        // here it is false only cause of width animation in 'NextButtonArrow.tsx', as width doesn't support useNativeDriver: true
+        // TODO:- find better solution so we can use true here and animation also work
+        useNativeDriver: false,
+      }).start();
+    },
+    [],
   );
-}
+
+  const onNextClick = useCallback(() => {
+    let toValue;
+    if (animValue.current === 0) {
+      toValue = 0.2;
+    } else if (animValue.current >= 0 && animValue.current <= 0.2) {
+      toValue = 0.4;
+    } else if (animValue.current > 0.2 && animValue.current <= 0.4) {
+      toValue = 0.6;
+    } else if (animValue.current > 0.4 && animValue.current <= 0.6) {
+      toValue = 0.8;
+    } else if (animValue.current > 0.6 && animValue.current <= 0.8) {
+      navigation.goBack();
+    }
+
+    toValue !== undefined && playAnimation(toValue);
+  }, [playAnimation, navigation]);
+
+  const onBackClick = useCallback(() => {
+    let toValue;
+    if (animValue.current >= 0.2 && animValue.current < 0.4) {
+      toValue = 0.0;
+    } else if (animValue.current >= 0.4 && animValue.current < 0.6) {
+      toValue = 0.2;
+    } else if (animValue.current >= 0.6 && animValue.current < 0.8) {
+      toValue = 0.4;
+    } else if (animValue.current === 0.8) {
+      toValue = 0.6;
+    }
+
+    toValue !== undefined && playAnimation(toValue);
+  }, [playAnimation]);
+
+  const onSkipClick = useCallback(() => {
+    playAnimation(0.8, 1200);
+  }, [playAnimation]);
+
+  return (
+    <View style={{ flex: 1, backgroundColor: 'rgb(245, 235, 226)' }}>
+      <StatusBar barStyle={`${currentPage > 0 ? 'dark' : 'light'}-content`} />
+      <SplashView {...{ onNextClick, animationController }} />
+
+      <Animated.View
+        style={[
+          styles.scenesContainer,
+          { transform: [{ translateY: relaxTranslateY }] },
+        ]}
+      >
+        <RelaxView {...{ animationController }} />
+
+        <CareView {...{ animationController }} />
+
+        <MoodDiaryView {...{ animationController }} />
+
+        <WelcomeView {...{ animationController }} />
+      </Animated.View>
+
+      <TopBackSkipView {...{ onBackClick, onSkipClick, animationController }} />
+
+      <CenterNextButton {...{ onNextClick, animationController }} />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  scenesContainer: {
+    justifyContent: 'center',
+    ...StyleSheet.absoluteFillObject,
   },
 });
+
+export default HomeScreen;
