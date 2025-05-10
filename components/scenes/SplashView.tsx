@@ -1,15 +1,15 @@
 import React from 'react';
 import {
-    Animated,
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    useWindowDimensions,
-    View,
+  Animated,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-// import { AppImages } from '../../assets';
+import { AppImages } from '../../assets/images';
 import MyPressable from './MyPressable';
 
 interface Props {
@@ -26,7 +26,7 @@ const SplashView: React.FC<Props> = ({ onNextClick, animationController }) => {
     outputRange: [0, -window.height, -window.height],
   });
 
-//   const introImageData = Image.resolveAssetSource(AppImages.introduction_image);
+  const introImageData = Image.resolveAssetSource(AppImages.introduction_image);
 
   return (
     <Animated.View
@@ -35,14 +35,14 @@ const SplashView: React.FC<Props> = ({ onNextClick, animationController }) => {
       <ScrollView style={{ flexGrow: 0 }} alwaysBounceVertical={false}>
         <View>
           <Image
-            // style={{
-            //   width: window.width,
-            //   height: undefined,
-            //   aspectRatio: introImageData
-            //     ? introImageData.width / introImageData.height
-            //     : 357 / 470,
-            // }}
-            // source={AppImages.introduction_image}
+            style={{
+              width: window.width,
+              height: undefined,
+              aspectRatio: introImageData
+                ? introImageData.width / introImageData.height
+                : 357 / 470,
+            }}
+            source={AppImages.introduction_image}
           />
         </View>
         <Text style={styles.title}>Clearhead</Text>

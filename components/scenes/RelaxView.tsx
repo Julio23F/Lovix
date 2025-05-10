@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Animated, StyleSheet, Text, useWindowDimensions } from 'react-native';
-// import { AppImages } from '../../assets';
+import { AppImages } from '../../assets/images';
 
 interface Props {
   animationController: React.RefObject<Animated.Value>;
@@ -49,7 +49,7 @@ const RelaxView: React.FC<Props> = ({ animationController }) => {
       </Animated.Text>
       <Animated.Image
         style={[styles.image, { transform: [{ translateX: imageAnim }] }]}
-        // source={AppImages.relax_image}
+        source={AppImages.relax_image}
       />
     </Animated.View>
   );

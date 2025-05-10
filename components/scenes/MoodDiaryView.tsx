@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Animated, StyleSheet, Text, useWindowDimensions } from 'react-native';
-// import { AppImages } from '../../assets';
+import { AppImages } from '../../assets/images';
 
 interface Props {
   animationController: React.RefObject<Animated.Value>;
@@ -46,7 +46,7 @@ const MoodDiaryView: React.FC<Props> = ({ animationController }) => {
       </Animated.Text>
       <Animated.Image
         style={[styles.image, { transform: [{ translateX: imageAnim }] }]}
-        // source={AppImages.mood_dairy_image}
+        source={AppImages.mood_dairy_image}
       />
     </Animated.View>
   );
