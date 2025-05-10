@@ -1,110 +1,84 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
+import React from 'react';
+import { Animated, StatusBar, StyleSheet, Text } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
+import MyPressable from './MyPressable';
+// import Config from '../../Config';
 
-export default function TopBackSkipView() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
-          style={styles.headerImage}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Explore</ThemedText>
-      </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-          <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-          different screen densities
-        </ThemedText>
-        <Image source={require('@/assets/images/react-logo.png')} style={{ alignSelf: 'center' }} />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Custom fonts">
-        <ThemedText>
-          Open <ThemedText type="defaultSemiBold">app/_layout.tsx</ThemedText> to see how to load{' '}
-          <ThemedText style={{ fontFamily: 'SpaceMono' }}>
-            custom fonts such as this one.
-          </ThemedText>
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/versions/latest/sdk/font">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{' '}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-          what the user&apos;s current color scheme is, and so you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{' '}
-          <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-          the powerful <ThemedText type="defaultSemiBold">react-native-reanimated</ThemedText>{' '}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
-    </ParallaxScrollView>
-  );
+interface Props {
+  onBackClick: () => void;
+  onSkipClick: () => void;
+  animationController: React.RefObject<Animated.Value>;
 }
 
+const TopBackSkipView: React.FC<Props> = ({
+  onBackClick,
+  onSkipClick,
+  animationController,
+}) => {
+  const { top } = useSafeAreaInsets();
+//   const marginTop = Config.isIos ? top : StatusBar.currentHeight;
+  const marginTop = false ? top : StatusBar.currentHeight;
+
+  const headerTranslateY = animationController.current.interpolate({
+    inputRange: [0, 0.2, 0.4, 0.6, 0.8],
+    outputRange: [-(58 + (marginTop ?? 0)), 0, 0, 0, 0],
+  });
+  const skipAnim = animationController.current.interpolate({
+    inputRange: [0, 0.2, 0.4, 0.6, 0.8],
+    outputRange: [0, 0, 0, 0, 80],
+  });
+
+  return (
+    <Animated.View
+      style={[
+        styles.buttonContainer,
+        { marginTop, transform: [{ translateY: headerTranslateY }] },
+      ]}
+    >
+      <MyPressable
+        style={styles.backBtn}
+        android_ripple={{ color: 'darkgrey', borderless: true, radius: 28 }}
+        onPress={() => onBackClick()}
+      >
+        <MaterialIcons name="arrow-back-ios" size={24} color="black" />
+      </MyPressable>
+
+      <Animated.View style={{ transform: [{ translateX: skipAnim }] }}>
+        <MyPressable
+          android_ripple={{ color: 'darkgrey', borderless: true, radius: 28 }}
+          onPress={() => onSkipClick()}
+        >
+          <Text style={{ color: 'black', fontFamily: 'WorkSans-Regular' }}>
+            Skip
+          </Text>
+        </MyPressable>
+      </Animated.View>
+    </Animated.View>
+  );
+};
+
 const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
-  },
-  titleContainer: {
+  buttonContainer: {
+    height: 58,
     flexDirection: 'row',
-    gap: 8,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingLeft: 8,
+    paddingRight: 16,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+  },
+  backBtn: {
+    width: 56,
+    height: 56,
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
+
+export default TopBackSkipView;

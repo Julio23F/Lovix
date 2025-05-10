@@ -1,110 +1,135 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import React, { useRef } from 'react';
+import { Animated, StyleSheet, Text } from 'react-native';
+// import Icon from 'react-native-vector-icons/MaterialIcons';
+import { MaterialIcons } from '@expo/vector-icons';
 
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
 
-export default function NextButtonArrow() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
-          style={styles.headerImage}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Explore</ThemedText>
-      </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-          <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-          different screen densities
-        </ThemedText>
-        <Image source={require('@/assets/images/react-logo.png')} style={{ alignSelf: 'center' }} />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Custom fonts">
-        <ThemedText>
-          Open <ThemedText type="defaultSemiBold">app/_layout.tsx</ThemedText> to see how to load{' '}
-          <ThemedText style={{ fontFamily: 'SpaceMono' }}>
-            custom fonts such as this one.
-          </ThemedText>
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/versions/latest/sdk/font">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{' '}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-          what the user&apos;s current color scheme is, and so you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{' '}
-          <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-          the powerful <ThemedText type="defaultSemiBold">react-native-reanimated</ThemedText>{' '}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
-    </ParallaxScrollView>
-  );
+
+import MyPressable from './MyPressable';
+
+interface Props {
+  onBtnPress: () => void;
+  animationController: React.MutableRefObject<Animated.Value>;
 }
 
+const IconPressable = Animated.createAnimatedComponent(MaterialIcons);
+
+/*
+ * TODO:- find better solution for this animation so we don't have to use 'useNativeDriver: false' in 'IntroductionAnimationScreen.tsx' as width doesn't support it yet
+ */
+const NextButtonArrow: React.FC<Props> = ({
+  onBtnPress,
+  animationController,
+}) => {
+  const arrowAnim = useRef<Animated.AnimatedInterpolation<number>>(
+    new Animated.Value(0),
+  );
+
+  arrowAnim.current = animationController.current.interpolate({
+    inputRange: [0, 0.2, 0.4, 0.6, 0.8],
+    outputRange: [0, 0, 0, 0, 1],
+  });
+
+  // for transition from arrow to sign up
+  const transitionAnim = arrowAnim.current.interpolate({
+    inputRange: [0, 0.85, 1],
+    outputRange: [36, 0, 0],
+  });
+  const opacityAnim = arrowAnim.current.interpolate({
+    inputRange: [0, 0.7, 1],
+    outputRange: [0, 0, 1],
+  });
+  const iconTransitionAnim = arrowAnim.current.interpolate({
+    inputRange: [0, 0.35, 0.85, 1], // or [0, 0.85, 1],
+    outputRange: [0, 0, -36, -36], // or [0, 0, -36]
+  });
+  const iconOpacityAnim = arrowAnim.current.interpolate({
+    inputRange: [0, 0.7, 1],
+    outputRange: [1, 0, 0],
+  });
+  // end
+
+  const widthAnim = arrowAnim.current.interpolate({
+    inputRange: [0, 1],
+    outputRange: [58, 258],
+  });
+
+  const marginBottomAnim = arrowAnim.current.interpolate({
+    inputRange: [0, 1],
+    outputRange: [38, 0],
+  });
+
+  const radiusAnim = arrowAnim.current.interpolate({
+    inputRange: [0, 1],
+    outputRange: [40, 8],
+  });
+
+  return (
+    <Animated.View
+      style={[
+        styles.container,
+        {
+          width: widthAnim,
+          borderRadius: radiusAnim,
+          marginBottom: marginBottomAnim,
+        },
+      ]}
+    >
+      <MyPressable
+        style={{ flex: 1, justifyContent: 'center' }}
+        android_ripple={{ color: 'darkgrey' }}
+        onPress={() => onBtnPress()}
+      >
+        <Animated.View
+          style={[
+            styles.signupContainer,
+            {
+              opacity: opacityAnim,
+              transform: [{ translateY: transitionAnim }],
+            },
+          ]}
+        >
+          <Text style={styles.signupText}>Sign Up</Text>
+          <MaterialIcons name="arrow-forward" size={24} color="white" />
+        </Animated.View>
+        {/* <MaterialIcons name="home" size={24} color="black" /> */}
+        <MaterialIcons
+          // style={[
+          //   styles.icon,
+          //   {
+          //     opacity: iconOpacityAnim,
+          //     transform: [{ translateY: iconTransitionAnim }],
+          //   },
+          // ]}
+          name="arrow-forward-ios"
+          size={24}
+          color="white"
+        />
+      </MyPressable>
+    </Animated.View>
+  );
+};
+
 const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
+  container: {
+    height: 58,
+    backgroundColor: 'rgb(21, 32, 54)',
+    overflow: 'hidden',
   },
-  titleContainer: {
+  signupContainer: {
     flexDirection: 'row',
-    gap: 8,
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+  },
+  signupText: {
+    fontSize: 18,
+    fontFamily: 'WorkSans-Medium',
+    color: 'white',
+  },
+  icon: {
+    position: 'absolute',
+    alignSelf: 'center',
   },
 });
+
+export default NextButtonArrow;

@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Animated, StyleSheet, Text } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import NextButtonArrow from './NextButtonArrow';
 
 interface Props {
   onNextClick: () => void;
@@ -107,7 +108,7 @@ const CenterNextButton: React.FC<Props> = ({
         ))}
       </Animated.View>
 
-      {/* <NextButtonArrow {...{ animationController }} onBtnPress={onNextClick} /> */}
+      <NextButtonArrow {...{ animationController }} onBtnPress={onNextClick} />
       {/* <NextButtonArrow {...{ animationController }}  /> */}
 
       <Animated.View
