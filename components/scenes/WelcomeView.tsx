@@ -43,7 +43,7 @@ const WelcomeView: React.FC<Props> = ({ animationController }) => {
         style={[styles.title, { transform: [{ translateX: welcomeTextAnim }] }]}
         ref={careRef}
       >
-        Welcome
+        Welcome (1ere page)
       </Animated.Text>
       <Text style={styles.subtitle}>
         Stay organised and live stress-free with you-do app
