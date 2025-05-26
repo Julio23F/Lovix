@@ -1,21 +1,21 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  Animated,
-  Easing,
-  StatusBar,
-  StyleSheet,
-  View,
-  useWindowDimensions,
+    Animated,
+    Easing,
+    StatusBar,
+    StyleSheet,
+    View,
+    useWindowDimensions,
 } from 'react-native';
 import {
-  CareView,
-  CenterNextButton,
-  MoodDiaryView,
-  RelaxView,
-  SplashView,
-  TopBackSkipView,
-  WelcomeView,
+    CareView,
+    CenterNextButton,
+    MoodDiaryView,
+    RelaxView,
+    SplashView,
+    TopBackSkipView,
+    WelcomeView,
 } from '../../components/scenes';
 
 const HomeScreen: React.FC = () => {
