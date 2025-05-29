@@ -19,7 +19,7 @@ const WelcomeView: React.FC<Props> = ({ animationController }) => {
     outputRange: [window.width, window.width, 0],
   });
 
-  const textEndVal = 26 * 2; // 26 being text's height (font size)
+  const textEndVal = 26 * 2;
   const welcomeTextAnim = animationController.current.interpolate({
     inputRange: [0, 0.6, 0.8],
     outputRange: [textEndVal, textEndVal, 0],
@@ -43,6 +43,7 @@ const WelcomeView: React.FC<Props> = ({ animationController }) => {
         style={[styles.title, { transform: [{ translateX: welcomeTextAnim }] }]}
         ref={careRef}
       >
+        refonte
         Welcome (1ere page)
       </Animated.Text>
       <Text style={styles.subtitle}>
