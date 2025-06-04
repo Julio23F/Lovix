@@ -19,7 +19,7 @@ const CareView: React.FC<Props> = ({ animationController }) => {
     outputRange: [window.width, window.width, 0, -window.width, -window.width],
   });
 
-  const careEndVal = 26 * 2; // 26 being text's height (font size)
+  const careEndVal = 26 * 2; 
   const careAnim = animationController.current.interpolate({
     inputRange: [0, 0.2, 0.4, 0.6, 0.8],
     outputRange: [careEndVal, careEndVal, 0, -careEndVal, -careEndVal],

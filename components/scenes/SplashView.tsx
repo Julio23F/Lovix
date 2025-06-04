@@ -36,6 +36,7 @@ const SplashView: React.FC<Props> = ({ onNextClick, animationController }) => {
         <View>
           <Image
             style={{
+              marginTop: 30,
               width: window.width,
               height: undefined,
               aspectRatio: introImageData
@@ -45,10 +46,10 @@ const SplashView: React.FC<Props> = ({ onNextClick, animationController }) => {
             source={AppImages.introduction_image}
           />
         </View>
-        <Text style={styles.title}>Clearhead</Text>
+        <Text style={styles.title}>Lovix</Text>
         <Text style={styles.subtitle}>
-          Lorem ipsum dolor sit amet,consectetur{'\n'}adipiscing elit,sed do
-          eiusmod tempor{'\n'}incididunt ut labore
+          Redécouvrez votre couple à travers des jeux{'\n'}
+          complices, drôles et parfois un peu osés
         </Text>
       </ScrollView>
 
@@ -60,7 +61,7 @@ const SplashView: React.FC<Props> = ({ onNextClick, animationController }) => {
             touchOpacity={0.6}
             onPress={() => onNextClick()}
           >
-            <Text style={styles.buttonText}>Let's begin</Text>
+            <Text style={styles.buttonText}>Commencer</Text>
           </MyPressable>
         </View>
       </View>
