@@ -90,17 +90,17 @@ const NextButtonArrow: React.FC<Props> = ({
           ]}
         >
           <Text style={styles.signupText}>Sign Up</Text>
-          <MaterialIcons name="arrow-forward" size={24} color="white" />
+          {/* <MaterialIcons name="arrow-forward" size={24} color="white" /> */}
         </Animated.View>
         {/* <MaterialIcons name="home" size={24} color="black" /> */}
         <MaterialIcons
-          // style={[
-          //   styles.icon,
-          //   {
-          //     opacity: iconOpacityAnim,
-          //     transform: [{ translateY: iconTransitionAnim }],
-          //   },
-          // ]}
+          style={[
+            styles.icon,
+            {
+              // opacity: iconOpacityAnim,
+              // transform: [{ translateY: iconTransitionAnim }],
+            },
+          ]}
           name="arrow-forward-ios"
           size={24}
           color="white"
