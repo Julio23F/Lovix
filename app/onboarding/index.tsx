@@ -1,21 +1,21 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
-    Animated,
-    Easing,
-    StatusBar,
-    StyleSheet,
-    View,
-    useWindowDimensions,
+  Animated,
+  Easing,
+  StatusBar,
+  StyleSheet,
+  View,
+  useWindowDimensions,
 } from 'react-native';
 import {
-    CareView,
-    CenterNextButton,
-    MoodDiaryView,
-    RelaxView,
-    SplashView,
-    TopBackSkipView,
-    WelcomeView,
+  CareView,
+  CenterNextButton,
+  MoodDiaryView,
+  RelaxView,
+  SplashView,
+  TopBackSkipView,
+  WelcomeView,
 } from '../../components/scenes';
 
 const HomeScreen: React.FC = () => {
@@ -90,7 +90,7 @@ const HomeScreen: React.FC = () => {
   }, [playAnimation]);
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'rgb(245, 235, 226)' }}>
+    <View style={{ flex: 1, backgroundColor: '#ffe9ef' }}>
       <StatusBar barStyle={`${currentPage > 0 ? 'dark' : 'light'}-content`} />
       <SplashView {...{ onNextClick, animationController }} />
 
