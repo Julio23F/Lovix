@@ -12,7 +12,7 @@ import {
   CareView,
   CenterNextButton,
   MoodDiaryView,
-  RelaxView,
+  PlayTogetherView,
   SplashView,
   TopBackSkipView,
   WelcomeView,
@@ -34,7 +34,7 @@ const HomeScreen: React.FC = () => {
     });
   }, []);
 
-  const relaxTranslateY = animationController.current.interpolate({
+  const playTogetherTranslateY = animationController.current.interpolate({
     inputRange: [0, 0.2, 0.4, 0.6, 0.8],
     outputRange: [window.height, 0, 0, 0, 0],
   });
@@ -97,10 +97,10 @@ const HomeScreen: React.FC = () => {
       <Animated.View
         style={[
           styles.scenesContainer,
-          { transform: [{ translateY: relaxTranslateY }] },
+          { transform: [{ translateY: playTogetherTranslateY }] },
         ]}
       >
-        <RelaxView {...{ animationController }} />
+        <PlayTogetherView {...{ animationController }} />
 
         <CareView {...{ animationController }} />
 

@@ -9,12 +9,12 @@ interface Props {
 const IMAGE_WIDTH = 350;
 const IMAGE_HEIGHT = 250;
 
-const RelaxView: React.FC<Props> = ({ animationController }) => {
+const PlayTogetherView: React.FC<Props> = ({ animationController }) => {
   const window = useWindowDimensions();
 
-  const relaxRef = useRef<Text | null>(null);
+  const playTogetherRef = useRef<Text | null>(null);
 
-  const relaxAnimation = animationController.current.interpolate({
+  const playTogetherAnimation = animationController.current.interpolate({
     inputRange: [0, 0.2, 0.8],
     outputRange: [-(26 * 2), 0, 0],
   });
@@ -36,20 +36,20 @@ const RelaxView: React.FC<Props> = ({ animationController }) => {
       style={[styles.container, { transform: [{ translateX: slideAnim }] }]}
     >
       <Animated.Text
-        style={[styles.title, { transform: [{ translateY: relaxAnimation }] }]}
-        ref={relaxRef}
+        style={[styles.title, { transform: [{ translateY: playTogetherAnimation }] }]}
+        ref={playTogetherRef}
       >
-        Relax
+        Jouez à deux
       </Animated.Text>
       <Animated.Text
         style={[styles.subtitle, { transform: [{ translateX: textAnim }] }]}
       >
-        Lorem ipsum dolor sit amet,consectetur adipiscing elit,sed do eiusmod
-        tempor incididunt ut labore
+        Des défis, des questions et des missions{'\n'}
+        pour renforcer votre lien tout en vous amusant.
       </Animated.Text>
       <Animated.Image
         style={[styles.image, { transform: [{ translateX: imageAnim }] }]}
-        source={AppImages.relax_image}
+        source={AppImages.playTogether_image}
       />
     </Animated.View>
   );
@@ -79,4 +79,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RelaxView;
+export default PlayTogetherView;
