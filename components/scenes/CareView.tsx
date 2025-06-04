@@ -43,11 +43,11 @@ const CareView: React.FC<Props> = ({ animationController }) => {
         style={[styles.title, { transform: [{ translateX: careAnim }] }]}
         ref={careRef}
       >
-        Care
+        Prêts pour l’aventure ?
       </Animated.Text>
       <Text style={styles.subtitle}>
-        Lorem ipsum dolor sit amet,consectetur adipiscing elit,sed do eiusmod
-        tempor incididunt ut labore
+        Que vous soyez en couple depuis peu ou longtemps,
+        ajoutez une touche de fun et de passion à votre quotidien.
       </Text>
     </Animated.View>
   );
