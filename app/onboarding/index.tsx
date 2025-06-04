@@ -45,8 +45,6 @@ const HomeScreen: React.FC = () => {
         toValue,
         duration,
         easing: Easing.bezier(0.4, 0.0, 0.2, 1.0),
-        // here it is false only cause of width animation in 'NextButtonArrow.tsx', as width doesn't support useNativeDriver: true
-        // TODO:- find better solution so we can use true here and animation also work
         useNativeDriver: false,
       }).start();
     },

@@ -53,7 +53,6 @@ const CenterNextButton: React.FC<Props> = ({
   const dots = useMemo(() => [0, 1, 2, 3], []);
 
   useEffect(() => {
-    // I think this condition could be better?
     animationController.current.addListener(({ value }) => {
       const isVisible = value >= 0.2 && value <= 0.6;
       if (
@@ -82,11 +81,11 @@ const CenterNextButton: React.FC<Props> = ({
 
   const topViewAnim = animationController.current.interpolate({
     inputRange: [0, 0.2, 0.4, 0.6, 0.8],
-    outputRange: [96 * 5, 0, 0, 0, 0], // 96 is total height of next button view
+    outputRange: [96 * 5, 0, 0, 0, 0],
   });
   const loginTextMoveAnimation = animationController.current.interpolate({
     inputRange: [0, 0.2, 0.4, 0.6, 0.8],
-    outputRange: [30 * 5, 30 * 5, 30 * 5, 30 * 5, 0], // 96 is total height of next button view
+    outputRange: [30 * 5, 30 * 5, 30 * 5, 30 * 5, 0], 
   });
 
   return (
