@@ -25,7 +25,7 @@ export default function RootLayout() {
       <StatusBar style="auto" /> */}
       <Stack screenOptions={{ headerShown: false }}>
         {/* Onboarding screen */}
-        <Stack.Screen name="onboarding/index" />
+        {/* <Stack.Screen name="onboarding/index" /> */}
 
         {/* Main app tabs */}
         <Stack.Screen name="(tabs)" />

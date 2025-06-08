@@ -1,0 +1,385 @@
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Star, Target, Check, X, Heart, Share2, CreditCard as Edit3 } from 'lucide-react-native';
+import { useState } from 'react';
+
+const users = [
+  {
+    id: 1,
+    name: 'Robert Fox',
+    avatar: 'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2',
+    score: 3,
+    streak: 7
+  },
+  {
+    id: 2,
+    name: 'Dianne Russell',
+    avatar: 'https://images.pexels.com/photos/1065084/pexels-photo-1065084.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2',
+    score: 5,
+    streak: 12
+  }
+];
+
+const challenges = [
+  {
+    id: 1,
+    phrase: 'Une soirée en ville.',
+    translation: 'An evening in town.',
+    user: 'Robert',
+    userAvatar: 'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2',
+    type: 'translation',
+    difficulty: 'medium'
+  },
+  {
+    id: 2,
+    phrase: 'Un dîner romantique.',
+    translation: 'A romantic dinner.',
+    user: 'Dianne',
+    userAvatar: 'https://images.pexels.com/photos/1065084/pexels-photo-1065084.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2',
+    type: 'pronunciation',
+    difficulty: 'easy'
+  }
+];
+
+export default function LearnScreen() {
+  const [currentUser] = useState(users[1]);
+  const [selectedChallenge, setSelectedChallenge] = useState<number | null>(null);
+
+  const handleChallengePress = (challengeId: number) => {
+    setSelectedChallenge(challengeId);
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+        {/* Header with User Profiles */}
+        <View style={styles.header}>
+          <View style={styles.userComparison}>
+            <View style={styles.userCard}>
+              <Image source={{ uri: users[0].avatar }} style={styles.userAvatar} />
+              <Text style={styles.userName}>{users[0].name}</Text>
+              <View style={styles.scoreContainer}>
+                <Text style={styles.scoreNumber}>{users[0].score}</Text>
+                <Star size={16} color="#FF6B35" fill="#FF6B35" />
+              </View>
+            </View>
+            
+            <View style={styles.vsContainer}>
+              <Text style={styles.vsText}>VS</Text>
+            </View>
+            
+            <View style={styles.userCard}>
+              <Image source={{ uri: users[1].avatar }} style={styles.userAvatar} />
+              <Text style={styles.userName}>{users[1].name}</Text>
+              <View style={styles.scoreContainer}>
+                <Text style={styles.scoreNumber}>{users[1].score}</Text>
+                <Star size={16} color="#FF6B35" fill="#FF6B35" />
+              </View>
+            </View>
+          </View>
+          
+          {/* Current User Profile */}
+          <View style={styles.currentUserProfile}>
+            <View style={styles.profileImageContainer}>
+              <Image source={{ uri: currentUser.avatar }} style={styles.profileImage} />
+              <View style={styles.profileBorder} />
+            </View>
+          </View>
+        </View>
+
+        {/* Challenge Section */}
+        <View style={styles.challengeSection}>
+          <Text style={styles.sectionTitle}>Échangeable</Text>
+          <Text style={styles.sectionSubtitle}>Recherche</Text>
+          
+          {challenges.map((challenge) => (
+            <TouchableOpacity
+              key={challenge.id}
+              style={[
+                styles.challengeCard,
+                selectedChallenge === challenge.id && styles.challengeCardSelected
+              ]}
+              onPress={() => handleChallengePress(challenge.id)}
+            >
+              <View style={styles.challengeHeader}>
+                <View style={styles.challengeUser}>
+                  <Image source={{ uri: challenge.userAvatar }} style={styles.challengeUserAvatar} />
+                  <Text style={styles.challengeUserName}>{challenge.user} a gagné !</Text>
+                </View>
+                <View style={styles.challengeActions}>
+                  <TouchableOpacity style={styles.actionButton}>
+                    <Target size={20} color="#FF6B35" />
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.shareButton}>
+                    <Share2 size={16} color="#6B7280" />
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.editButton}>
+                    <Edit3 size={16} color="#6B7280" />
+                  </TouchableOpacity>
+                </View>
+              </View>
+              
+              <View style={styles.challengeContent}>
+                <Text style={styles.challengePhrase}>{challenge.phrase}</Text>
+                <Text style={styles.challengeTranslation}>{challenge.translation}</Text>
+              </View>
+              
+              <View style={styles.challengeFooter}>
+                <TouchableOpacity style={styles.searchButton}>
+                  <Text style={styles.searchButtonText}>Recherche</Text>
+                </TouchableOpacity>
+                
+                <View style={styles.challengeButtons}>
+                  <TouchableOpacity style={styles.wrongButton}>
+                    <X size={20} color="#EF4444" />
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.correctButton}>
+                    <Check size={20} color="#10B981" />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        {/* Bottom Actions */}
+        <View style={styles.bottomActions}>
+          <TouchableOpacity style={styles.likeButton}>
+            <Heart size={24} color="#6B7280" />
+          </TouchableOpacity>
+          
+          <TouchableOpacity style={styles.challengeActionButton}>
+            <Target size={24} color="#FF6B35" />
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F9FAFB',
+  },
+  scrollView: {
+    flex: 1,
+  },
+  header: {
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 30,
+  },
+  userComparison: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
+  },
+  userCard: {
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
+    minWidth: 120,
+  },
+  userAvatar: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginBottom: 8,
+  },
+  userName: {
+    fontFamily: 'Inter-SemiBold',
+    fontSize: 14,
+    color: '#1F2937',
+    marginBottom: 4,
+    textAlign: 'center',
+  },
+  scoreContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FFF7ED',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+  },
+  scoreNumber: {
+    fontFamily: 'Inter-Bold',
+    fontSize: 16,
+    color: '#FF6B35',
+    marginRight: 4,
+  },
+  vsContainer: {
+    marginHorizontal: 20,
+    backgroundColor: '#FF6B35',
+    borderRadius: 20,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  vsText: {
+    fontFamily: 'Inter-Bold',
+    fontSize: 14,
+    color: '#FFFFFF',
+  },
+  currentUserProfile: {
+    alignItems: 'center',
+  },
+  profileImageContainer: {
+    position: 'relative',
+  },
+  profileImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+  },
+  profileBorder: {
+    position: 'absolute',
+    top: -4,
+    left: -4,
+    width: 88,
+    height: 88,
+    borderRadius: 44,
+    borderWidth: 3,
+    borderColor: '#FF6B35',
+  },
+  challengeSection: {
+    paddingHorizontal: 20,
+  },
+  sectionTitle: {
+    fontFamily: 'Inter-Bold',
+    fontSize: 18,
+    color: '#FF6B35',
+    marginBottom: 4,
+  },
+  sectionSubtitle: {
+    fontFamily: 'Inter-Regular',
+    fontSize: 14,
+    color: '#6B7280',
+    marginBottom: 20,
+  },
+  challengeCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  challengeCardSelected: {
+    borderWidth: 2,
+    borderColor: '#FF6B35',
+  },
+  challengeHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  challengeUser: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  challengeUserAvatar: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    marginRight: 8,
+  },
+  challengeUserName: {
+    fontFamily: 'Inter-Medium',
+    fontSize: 12,
+    color: '#6B7280',
+  },
+  challengeActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  actionButton: {
+    padding: 8,
+    backgroundColor: '#FFF7ED',
+    borderRadius: 12,
+    marginRight: 8,
+  },
+  shareButton: {
+    padding: 8,
+    marginRight: 8,
+  },
+  editButton: {
+    padding: 8,
+  },
+  challengeContent: {
+    marginBottom: 16,
+  },
+  challengePhrase: {
+    fontFamily: 'Inter-SemiBold',
+    fontSize: 18,
+    color: '#1F2937',
+    marginBottom: 4,
+  },
+  challengeTranslation: {
+    fontFamily: 'Inter-Regular',
+    fontSize: 14,
+    color: '#6B7280',
+  },
+  challengeFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  searchButton: {
+    backgroundColor: '#F3F4F6',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+  },
+  searchButtonText: {
+    fontFamily: 'Inter-Medium',
+    fontSize: 12,
+    color: '#6B7280',
+  },
+  challengeButtons: {
+    flexDirection: 'row',
+  },
+  wrongButton: {
+    backgroundColor: '#FEE2E2',
+    borderRadius: 24,
+    padding: 12,
+    marginRight: 8,
+  },
+  correctButton: {
+    backgroundColor: '#D1FAE5',
+    borderRadius: 24,
+    padding: 12,
+  },
+  bottomActions: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    backgroundColor: '#FFFFFF',
+    borderTopWidth: 1,
+    borderTopColor: '#E5E5E5',
+    marginTop: 20,
+  },
+  likeButton: {
+    backgroundColor: '#F3F4F6',
+    borderRadius: 24,
+    padding: 16,
+  },
+  challengeActionButton: {
+    backgroundColor: '#FFF7ED',
+    borderRadius: 24,
+    padding: 16,
+  },
+});
