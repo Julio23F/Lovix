@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
+import { Award, Medal, Star, Trophy } from 'lucide-react-native';
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Trophy, Medal, Award, Star } from 'lucide-react-native';
 
 const leaderboardData = [
   {
@@ -138,7 +138,7 @@ export default function LeaderboardScreen() {
                 <View style={styles.userDetails}>
                   <Text style={styles.userName}>{user.name}</Text>
                   <View style={styles.userStats}>
-                    <Star size={14} color="#FF6B35" fill="#FF6B35" />
+                    <Star size={14} color="#E60342" fill="#E60342" />
                     <Text style={styles.streakText}>{user.streak} jour{user.streak > 1 ? 's' : ''}</Text>
                   </View>
                 </View>
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
   podiumScore: {
     fontFamily: 'Inter-Bold',
     fontSize: 16,
-    color: '#FF6B35',
+    color: '#E60342',
     marginBottom: 8,
   },
   podiumBar: {
@@ -321,7 +321,7 @@ const styles = StyleSheet.create({
   userScore: {
     fontFamily: 'Inter-Bold',
     fontSize: 18,
-    color: '#FF6B35',
+    color: '#E60342',
   },
   scoreLabel: {
     fontFamily: 'Inter-Regular',

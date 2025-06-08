@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { Award, BookOpen, Calendar, Clock, Settings, Star, Target, Trophy } from 'lucide-react-native';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Star, Target, Trophy, Calendar, Clock, BookOpen, Award, Settings } from 'lucide-react-native';
 
 const currentUser = {
   name: 'Dianne Russell',
@@ -63,7 +63,7 @@ export default function ProfileScreen() {
         <View style={styles.statsGrid}>
           <View style={styles.statCard}>
             <View style={styles.statIcon}>
-              <Star size={24} color="#FF6B35" />
+              <Star size={24} color="#E60342" />
             </View>
             <Text style={styles.statNumber}>{currentUser.streak}</Text>
             <Text style={styles.statLabel}>Jour de suite</Text>
@@ -108,7 +108,7 @@ export default function ProfileScreen() {
                   styles.achievementIcon,
                   !achievement.earned && styles.achievementIconLocked
                 ]}>
-                  <Award size={24} color={achievement.earned ? "#FF6B35" : "#9CA3AF"} />
+                  <Award size={24} color={achievement.earned ? "#E60342" : "#9CA3AF"} />
                 </View>
                 
                 <View style={styles.achievementInfo}>
@@ -136,12 +136,12 @@ export default function ProfileScreen() {
         {/* Quick Actions */}
         <View style={styles.actionsSection}>
           <TouchableOpacity style={styles.actionButton}>
-            <Trophy size={20} color="#FF6B35" />
+            <Trophy size={20} color="#E60342" />
             <Text style={styles.actionButtonText}>Voir le classement</Text>
           </TouchableOpacity>
           
           <TouchableOpacity style={styles.actionButton}>
-            <Calendar size={20} color="#FF6B35" />
+            <Calendar size={20} color="#E60342" />
             <Text style={styles.actionButtonText}>Rappels d'étude</Text>
           </TouchableOpacity>
         </View>
@@ -175,13 +175,13 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 50,
     borderWidth: 4,
-    borderColor: '#FF6B35',
+    borderColor: '#E60342',
   },
   levelBadge: {
     position: 'absolute',
     bottom: 0,
     right: 0,
-    backgroundColor: '#FF6B35',
+    backgroundColor: '#E60342',
     borderRadius: 15,
     width: 30,
     height: 30,
@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
   },
   progressFill: {
     height: '100%',
-    backgroundColor: '#FF6B35',
+    backgroundColor: '#E60342',
     borderRadius: 4,
   },
   statsGrid: {

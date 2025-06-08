@@ -1,7 +1,7 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Star, Target, Check, X, Heart, Share2, CreditCard as Edit3 } from 'lucide-react-native';
+import { Check, CreditCard as Edit3, Heart, Share2, Star, Target, X } from 'lucide-react-native';
 import { useState } from 'react';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const users = [
   {
@@ -60,7 +60,7 @@ export default function LearnScreen() {
               <Text style={styles.userName}>{users[0].name}</Text>
               <View style={styles.scoreContainer}>
                 <Text style={styles.scoreNumber}>{users[0].score}</Text>
-                <Star size={16} color="#FF6B35" fill="#FF6B35" />
+                <Star size={16} color="#E60342" fill="#E60342" />
               </View>
             </View>
             
@@ -73,7 +73,7 @@ export default function LearnScreen() {
               <Text style={styles.userName}>{users[1].name}</Text>
               <View style={styles.scoreContainer}>
                 <Text style={styles.scoreNumber}>{users[1].score}</Text>
-                <Star size={16} color="#FF6B35" fill="#FF6B35" />
+                <Star size={16} color="#E60342" fill="#E60342" />
               </View>
             </View>
           </View>
@@ -108,7 +108,7 @@ export default function LearnScreen() {
                 </View>
                 <View style={styles.challengeActions}>
                   <TouchableOpacity style={styles.actionButton}>
-                    <Target size={20} color="#FF6B35" />
+                    <Target size={20} color="#E60342" />
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.shareButton}>
                     <Share2 size={16} color="#6B7280" />
@@ -149,7 +149,7 @@ export default function LearnScreen() {
           </TouchableOpacity>
           
           <TouchableOpacity style={styles.challengeActionButton}>
-            <Target size={24} color="#FF6B35" />
+            <Target size={24} color="#E60342" />
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -212,12 +212,12 @@ const styles = StyleSheet.create({
   scoreNumber: {
     fontFamily: 'Inter-Bold',
     fontSize: 16,
-    color: '#FF6B35',
+    color: '#E60342',
     marginRight: 4,
   },
   vsContainer: {
     marginHorizontal: 20,
-    backgroundColor: '#FF6B35',
+    backgroundColor: '#E60342',
     borderRadius: 20,
     paddingHorizontal: 16,
     paddingVertical: 8,
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
     height: 88,
     borderRadius: 44,
     borderWidth: 3,
-    borderColor: '#FF6B35',
+    borderColor: '#E60342',
   },
   challengeSection: {
     paddingHorizontal: 20,
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontFamily: 'Inter-Bold',
     fontSize: 18,
-    color: '#FF6B35',
+    color: '#E60342',
     marginBottom: 4,
   },
   sectionSubtitle: {
@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
   },
   challengeCardSelected: {
     borderWidth: 2,
-    borderColor: '#FF6B35',
+    borderColor: '#E60342',
   },
   challengeHeader: {
     flexDirection: 'row',

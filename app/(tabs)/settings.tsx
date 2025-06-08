@@ -1,7 +1,7 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Bell, Volume2, Moon, Globe, CircleHelp as HelpCircle, LogOut, ChevronRight } from 'lucide-react-native';
+import { Bell, ChevronRight, Globe, CircleHelp as HelpCircle, LogOut, Moon, Volume2 } from 'lucide-react-native';
 import { useState } from 'react';
+import { ScrollView, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function SettingsScreen() {
   const [notifications, setNotifications] = useState(true);
@@ -129,7 +129,7 @@ export default function SettingsScreen() {
                       <Switch
                         value={item.value}
                         onValueChange={item.onChange}
-                        trackColor={{ false: '#E5E7EB', true: '#FF6B35' }}
+                        trackColor={{ false: '#E5E7EB', true: '#E60342' }}
                         thumbColor={item.value ? '#FFFFFF' : '#FFFFFF'}
                       />
                     )}
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
   appInfoTitle: {
     fontFamily: 'Inter-Bold',
     fontSize: 18,
-    color: '#FF6B35',
+    color: '#E60342',
     marginBottom: 4,
   },
   appInfoVersion: {
