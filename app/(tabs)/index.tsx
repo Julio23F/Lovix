@@ -97,10 +97,16 @@ export default function LearnScreen() {
               key={challenge.id}
               style={[
                 styles.challengeCard,
-                selectedChallenge === challenge.id && styles.challengeCardSelected
+                styles.challengeCardSelected
+                // selectedChallenge === challenge.id && styles.challengeCardSelected
               ]}
               onPress={() => handleChallengePress(challenge.id)}
             >
+              <View style={styles.badgeContainer}>
+                <Text style={[styles.badge, { backgroundColor: "red" }]}>
+                  "test"
+                </Text>
+              </View>
               <View style={styles.challengeHeader}>
                 <View style={styles.challengeUser}>
                   <Image source={{ uri: challenge.userAvatar }} style={styles.challengeUserAvatar} />
@@ -275,8 +281,21 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   challengeCardSelected: {
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: '#E60342',
+  },
+  badgeContainer: {
+    alignItems: 'flex-end',
+  },
+  badge: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+    fontSize: 10,
+    fontFamily: 'Inter-SemiBold',
+    color: '#ffffff',
+    textAlign: 'center',
+    overflow: 'hidden',
   },
   challengeHeader: {
     flexDirection: 'row',
