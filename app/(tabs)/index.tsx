@@ -78,14 +78,6 @@ export default function LearnScreen() {
               <Text style={styles.userName}>{users[1].name}</Text>
             </View>
           </View>
-          
-          {/* Current User Profile */}
-          <View style={styles.currentUserProfile}>
-            <View style={styles.profileImageContainer}>
-              <Image source={{ uri: currentUser.avatar }} style={styles.profileImage} />
-              <View style={styles.profileBorder} />
-            </View>
-          </View>
         </View>
 
         {/* Challenge Section */}
@@ -189,8 +181,8 @@ const styles = StyleSheet.create({
   },
   userCardLeft: {
     alignItems: 'center',
-    borderTopLeftRadius: 20,
-    borderBottomLeftRadius: 20,
+    borderTopLeftRadius: 15,
+    borderBottomLeftRadius: 15,
     // padding: 16,
     // elevation: 4,
     // minWidth: 120,
@@ -201,8 +193,8 @@ const styles = StyleSheet.create({
   },
   userCardRight: {
     alignItems: 'center',
-    borderTopRightRadius: 20,
-    borderBottomRightRadius: 20,
+    borderTopRightRadius: 15,
+    borderBottomRightRadius: 15,
     // padding: 16,
     // elevation: 4,
     // minWidth: 120,
@@ -246,9 +238,9 @@ const styles = StyleSheet.create({
   },
   vsContainer: {
     position: 'absolute',
-    width: 70,
-    height: 40,
-    top: 35,
+    width: 65,
+    height: 35,
+    top: 45,
     zIndex: 2,
     backgroundColor: '#E60342',
     padding: 2,
@@ -261,33 +253,12 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   vsTextContainer: {
-    paddingTop: 3
+    // paddingTop: 3
   },
   vsText: {
     fontFamily: 'Inter-Bold',
     fontSize: 12,
     color: '#FFFFFF',
-  },
-  currentUserProfile: {
-    alignItems: 'center',
-  },
-  profileImageContainer: {
-    position: 'relative',
-  },
-  profileImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-  },
-  profileBorder: {
-    position: 'absolute',
-    top: -4,
-    left: -4,
-    width: 88,
-    height: 88,
-    borderRadius: 44,
-    borderWidth: 3,
-    borderColor: '#E60342',
   },
   challengeSection: {
     paddingHorizontal: 20,
