@@ -1,4 +1,4 @@
-import { Check, CreditCard as Edit3, Heart, Share2, Star, Target, X } from 'lucide-react-native';
+import { Check, CreditCard as Edit3, Heart, Share2, Target, X } from 'lucide-react-native';
 import { useState } from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -54,27 +54,25 @@ export default function LearnScreen() {
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         {/* Header with User Profiles */}
         <View style={styles.header}>
+
+          <View style={styles.vsContainer}>
+            <View style={styles.scoreContainer}>
+              <Text style={styles.scoreNumber}>{users[0].score}</Text>
+              {/* <Star size={16} color="#E60342" fill="#E60342" /> */}
+            </View>
+            <Text style={styles.vsText}>VS</Text>
+          </View>
+
           <View style={styles.userComparison}>
-            <View style={styles.userCard}>
+            <View style={styles.userCardLeft}>
               <Image source={{ uri: users[0].avatar }} style={styles.userAvatar} />
               <Text style={styles.userName}>{users[0].name}</Text>
-              <View style={styles.scoreContainer}>
-                <Text style={styles.scoreNumber}>{users[0].score}</Text>
-                <Star size={16} color="#E60342" fill="#E60342" />
-              </View>
             </View>
             
-            <View style={styles.vsContainer}>
-              <Text style={styles.vsText}>VS</Text>
-            </View>
-            
-            <View style={styles.userCard}>
+          
+            <View style={styles.userCardRight}>
               <Image source={{ uri: users[1].avatar }} style={styles.userAvatar} />
               <Text style={styles.userName}>{users[1].name}</Text>
-              <View style={styles.scoreContainer}>
-                <Text style={styles.scoreNumber}>{users[1].score}</Text>
-                <Star size={16} color="#E60342" fill="#E60342" />
-              </View>
             </View>
           </View>
           
@@ -175,6 +173,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 20,
     paddingBottom: 30,
+
+
+    position: 'relative',
+    alignItems: 'center',
   },
   userComparison: {
     flexDirection: 'row',
@@ -182,23 +184,35 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 20,
   },
-  userCard: {
+  userCardLeft: {
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
-    padding: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
-    minWidth: 120,
+    backgroundColor: 'blue',
+    borderTopLeftRadius: 20,
+    borderBottomLeftRadius: 20,
+    // padding: 16,
+    // elevation: 4,
+    // minWidth: 120,
+
+    width: 120,
+    height: 120,
+    overflow: 'hidden',
+  },
+  userCardRight: {
+    alignItems: 'center',
+    backgroundColor: 'red',
+    borderTopRightRadius: 20,
+    borderBottomRightRadius: 20,
+    // padding: 16,
+    // elevation: 4,
+    // minWidth: 120,
+
+    width: 120,
+    height: 120,
+    overflow: 'hidden',
   },
   userAvatar: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginBottom: 8,
+    width: '100%',
+    height: '100%',
   },
   userName: {
     fontFamily: 'Inter-SemiBold',
@@ -221,12 +235,26 @@ const styles = StyleSheet.create({
     color: '#E60342',
     marginRight: 4,
   },
+  // vsContainer: {
+  //   marginHorizontal: 20,
+  //   backgroundColor: '#E60342',
+  //   borderRadius: 20,
+  //   paddingHorizontal: 16,
+  //   paddingVertical: 8,
+  // },
   vsContainer: {
-    marginHorizontal: 20,
-    backgroundColor: '#E60342',
-    borderRadius: 20,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    position: 'absolute',
+    top: 35,
+    zIndex: 2,
+    backgroundColor: '#fff',
+    padding: 8,
+    borderRadius: 8,
+    alignItems: 'center',
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   vsText: {
     fontFamily: 'Inter-Bold',
