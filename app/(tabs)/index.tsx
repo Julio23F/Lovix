@@ -58,9 +58,12 @@ export default function LearnScreen() {
           <View style={styles.vsContainer}>
             <View style={styles.scoreContainer}>
               <Text style={styles.scoreNumber}>{users[0].score}</Text>
-              {/* <Star size={16} color="#E60342" fill="#E60342" /> */}
+              <View style={styles.scoreLine}></View>
+              <Text style={styles.scoreNumber}>{users[0].score}</Text>
             </View>
-            <Text style={styles.vsText}>VS</Text>
+            <View style={styles.vsTextContainer}>
+              <Text style={styles.vsText}>Scores</Text>
+            </View>
           </View>
 
           <View style={styles.userComparison}>
@@ -186,7 +189,6 @@ const styles = StyleSheet.create({
   },
   userCardLeft: {
     alignItems: 'center',
-    backgroundColor: 'blue',
     borderTopLeftRadius: 20,
     borderBottomLeftRadius: 20,
     // padding: 16,
@@ -199,7 +201,6 @@ const styles = StyleSheet.create({
   },
   userCardRight: {
     alignItems: 'center',
-    backgroundColor: 'red',
     borderTopRightRadius: 20,
     borderBottomRightRadius: 20,
     // padding: 16,
@@ -223,11 +224,14 @@ const styles = StyleSheet.create({
   },
   scoreContainer: {
     flexDirection: 'row',
+    justifyContent: "space-between",
     alignItems: 'center',
     backgroundColor: '#FFF7ED',
     paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 20,
+    borderTopRightRadius: 4,
+    borderTopLeftRadius: 4,
+    height: '50%',
+    width: '100%',
   },
   scoreNumber: {
     fontFamily: 'Inter-Bold',
@@ -235,20 +239,20 @@ const styles = StyleSheet.create({
     color: '#E60342',
     marginRight: 4,
   },
-  // vsContainer: {
-  //   marginHorizontal: 20,
-  //   backgroundColor: '#E60342',
-  //   borderRadius: 20,
-  //   paddingHorizontal: 16,
-  //   paddingVertical: 8,
-  // },
+  scoreLine: {
+    width: 2,
+    height: '100%',
+    backgroundColor: "red"
+  },
   vsContainer: {
     position: 'absolute',
+    width: 70,
+    height: 40,
     top: 35,
     zIndex: 2,
-    backgroundColor: '#fff',
-    padding: 8,
-    borderRadius: 8,
+    backgroundColor: '#E60342',
+    padding: 2,
+    borderRadius: 5,
     alignItems: 'center',
     elevation: 4,
     shadowColor: '#000',
@@ -256,9 +260,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
   },
+  vsTextContainer: {
+    paddingTop: 3
+  },
   vsText: {
     fontFamily: 'Inter-Bold',
-    fontSize: 14,
+    fontSize: 12,
     color: '#FFFFFF',
   },
   currentUserProfile: {
