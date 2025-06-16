@@ -54,7 +54,6 @@ export default function LearnScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-        {/* Header with User Profiles */}
         <View style={styles.header}>
 
           <View style={styles.vsContainer}>
@@ -85,7 +84,6 @@ export default function LearnScreen() {
           </View>
         </View>
 
-        {/* Challenge Section */}
         <View style={styles.challengeSection}>
           <Text style={styles.sectionTitle}>Échangeable</Text>
           <Text style={styles.sectionSubtitle}>Recherche</Text>
@@ -100,11 +98,13 @@ export default function LearnScreen() {
               ]}
               onPress={() => handleChallengePress(challenge.id)}
             >
-              <View style={styles.badgeContainer}>
-                <Text style={[styles.badge, { backgroundColor: "red" }]}>
-                  "test"
-                </Text>
-              </View>
+              {challenge.id === 1 && 
+                <View style={styles.badgeContainer}>
+                  <Text style={styles.badgeText}>
+                  C'est ton tour
+                  </Text>
+                </View>
+              }
               <View style={styles.challengeHeader}>
                 <View style={styles.challengeUser}>
                   <Image source={{ uri: challenge.userAvatar }} style={styles.challengeUserAvatar} />
@@ -146,7 +146,6 @@ export default function LearnScreen() {
           ))}
         </View>
 
-        {/* Bottom Actions */}
         <View style={styles.bottomActions}>
           <TouchableOpacity style={styles.likeButton}>
             <Heart size={24} color="#6B7280" />
@@ -164,7 +163,7 @@ export default function LearnScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F9FAFB',
+    backgroundColor: '#fff',
   },
   scrollView: {
     flex: 1,
@@ -175,13 +174,31 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     position: 'relative',
     alignItems: 'center',
-    // backgroundColor: "red"
+    // backgroundColor: "#fff",
+
+   
+
   },
   userComparison: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 20,
+    borderTopLeftRadius: 15,
+    borderBottomLeftRadius: 15,
+    borderTopRightRadius: 15,
+    borderBottomRightRadius: 15,
+    backgroundColor: "#fff",
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+
+    elevation: 3,
   },
   userCardLeft: {
     alignItems: 'center',
@@ -252,7 +269,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 15,
     borderTopLeftRadius: 15,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   vsContainer: {
     position: 'absolute',
@@ -298,28 +315,52 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 16,
     marginBottom: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
+    // shadowColor: '#000',
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowOpacity: 0.1,
+    // shadowRadius: 8,
+    // elevation: 4,
+    position: "relative",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+
+    elevation: 3,
+    // alignItems: "center"
+  },
+  badgeContainer: {
+    // alignItems: 'flex-end',
+    position: "absolute",
+    top: -15,
+    backgroundColor: "#D1FAE5",
+    width: (screen.width / 3),
+    height: 35,
+    borderColor: "#fff",
+    borderWidth: 2,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    marginHorizontal: "auto",
+
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+    
+    overflow: 'hidden',
+  },
+  badgeText: {
+    fontSize: 12,
+    fontFamily: 'Inter-SemiBold',
+    color: '#000',
+    textAlign: 'center',
   },
   challengeCardSelected: {
     borderWidth: 1,
     borderColor: '#E60342',
-  },
-  badgeContainer: {
-    alignItems: 'flex-end',
-  },
-  badge: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 12,
-    fontSize: 10,
-    fontFamily: 'Inter-SemiBold',
-    color: '#ffffff',
-    textAlign: 'center',
-    overflow: 'hidden',
   },
   challengeHeader: {
     flexDirection: 'row',
