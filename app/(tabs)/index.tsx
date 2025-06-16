@@ -1,5 +1,4 @@
-import { Check, CreditCard as Edit3, Heart, MessageCircleHeart, Share2, Target, X } from 'lucide-react-native';
-import { useState } from 'react';
+import { CreditCard as Edit3, MessageCircleHeart, Share2 } from 'lucide-react-native';
 import { Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -23,6 +22,7 @@ const users = [
 const challenges = [
   {
     id: 1,
+    isYourTurn: true,
     phrase: 'Une soirée en ville.',
     translation: 'An evening in town.',
     user: 'Robert',
@@ -32,24 +32,28 @@ const challenges = [
   },
   {
     id: 2,
+    isYourTurn: false,
     phrase: 'Un dîner romantique.',
     translation: 'A romantic dinner.',
     user: 'Dianne',
     userAvatar: 'https://images.pexels.com/photos/1065084/pexels-photo-1065084.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2',
     type: 'pronunciation',
     difficulty: 'easy'
-  }
+  },
+  {
+    id: 1,
+    isYourTurn: true,
+    phrase: 'Une soirée en ville.',
+    translation: 'An evening in town.',
+    user: 'Robert',
+    userAvatar: 'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2',
+    type: 'translation',
+    difficulty: 'medium'
+  },
 ];
 const screen = Dimensions.get('window');
 
-export default function LearnScreen() {
-
-  const [currentUser] = useState(users[1]);
-  const [selectedChallenge, setSelectedChallenge] = useState<number | null>(null);
-
-  const handleChallengePress = (challengeId: number) => {
-    setSelectedChallenge(challengeId);
-  };
+export default function GameScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
@@ -59,7 +63,7 @@ export default function LearnScreen() {
           <View style={styles.vsContainer}>
             <View style={styles.scoreContainer}>
               <Text style={styles.scoreNumber}>{users[0].score}</Text>
-              <View style={styles.scoreLine}></View>
+              <View style={styles.middleLine}></View>
               <Text style={styles.scoreNumber}>{users[0].score}</Text>
             </View>
             <View style={styles.vsTextContainer}>
@@ -75,7 +79,7 @@ export default function LearnScreen() {
               <Image source={{ uri: users[0].avatar }} style={styles.userAvatar} />
               <Text style={styles.userName}>{users[0].name}</Text>
             </View>
-            
+            <View style={styles.middleLine}></View>
           
             <View style={styles.userCardRight}>
               <Image source={{ uri: users[1].avatar }} style={styles.userAvatar} />
@@ -88,17 +92,16 @@ export default function LearnScreen() {
           <Text style={styles.sectionTitle}>Échangeable</Text>
           <Text style={styles.sectionSubtitle}>Recherche</Text>
           
-          {challenges.map((challenge) => (
+          {challenges.map((challenge, key) => (
             <TouchableOpacity
-              key={challenge.id}
+              key={key}
               style={[
                 styles.challengeCard,
-                styles.challengeCardSelected
-                // selectedChallenge === challenge.id && styles.challengeCardSelected
+                challenge.isYourTurn && {marginTop: 15}
               ]}
-              onPress={() => handleChallengePress(challenge.id)}
+              // onPress={() => handleChallengePress(challenge.id)}
             >
-              {challenge.id === 1 && 
+              {challenge.isYourTurn && 
                 <View style={styles.badgeContainer}>
                   <Text style={styles.badgeText}>
                   C'est ton tour
@@ -108,12 +111,12 @@ export default function LearnScreen() {
               <View style={styles.challengeHeader}>
                 <View style={styles.challengeUser}>
                   <Image source={{ uri: challenge.userAvatar }} style={styles.challengeUserAvatar} />
-                  <Text style={styles.challengeUserName}>{challenge.user} a gagné !</Text>
+                  {challenge.isYourTurn ?
+                    <Text style={styles.challengeUserName}>A toi de jouer !</Text>
+                    :<Text style={styles.challengeUserName}>{challenge.user} a gagné !</Text>
+                  } 
                 </View>
                 <View style={styles.challengeActions}>
-                  <TouchableOpacity style={styles.actionButton}>
-                    <Target size={20} color="#E60342" />
-                  </TouchableOpacity>
                   <TouchableOpacity style={styles.shareButton}>
                     <Share2 size={16} color="#6B7280" />
                   </TouchableOpacity>
@@ -127,33 +130,8 @@ export default function LearnScreen() {
                 <Text style={styles.challengePhrase}>{challenge.phrase}</Text>
                 <Text style={styles.challengeTranslation}>{challenge.translation}</Text>
               </View>
-              
-              <View style={styles.challengeFooter}>
-                <TouchableOpacity style={styles.searchButton}>
-                  <Text style={styles.searchButtonText}>Recherche</Text>
-                </TouchableOpacity>
-                
-                <View style={styles.challengeButtons}>
-                  <TouchableOpacity style={styles.wrongButton}>
-                    <X size={20} color="#EF4444" />
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.correctButton}>
-                    <Check size={20} color="#10B981" />
-                  </TouchableOpacity>
-                </View>
-              </View>
             </TouchableOpacity>
           ))}
-        </View>
-
-        <View style={styles.bottomActions}>
-          <TouchableOpacity style={styles.likeButton}>
-            <Heart size={24} color="#6B7280" />
-          </TouchableOpacity>
-          
-          <TouchableOpacity style={styles.challengeActionButton}>
-            <Target size={24} color="#E60342" />
-          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -253,17 +231,17 @@ const styles = StyleSheet.create({
     color: '#E60342',
     marginRight: 4,
   },
-  scoreLine: {
+  middleLine: {
     width: 2,
     height: '100%',
-    backgroundColor: "red"
+    backgroundColor: "#fff"
   },
   messageContainer: {
     position: 'absolute',
     width: 45,
     height: 35,
     bottom: 20,
-    right: 20,
+    right: 19,
     zIndex: 2,
     backgroundColor: "#fff",
     borderBottomRightRadius: 15,
@@ -311,10 +289,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   challengeCard: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#fff',
     borderRadius: 16,
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
     marginBottom: 16,
+    borderWidth: 1,
+    borderColor: '#F3F4F6',
+
     // shadowColor: '#000',
     // shadowOffset: { width: 0, height: 2 },
     // shadowOpacity: 0.1,
@@ -326,16 +308,16 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1,
     },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
+    shadowOpacity: 0.18,
+    shadowRadius: 1.00,
 
-    elevation: 3,
-    // alignItems: "center"
+    elevation: 1,
   },
   badgeContainer: {
     // alignItems: 'flex-end',
     position: "absolute",
-    top: -15,
+    top: -20,
+    left: 2,
     backgroundColor: "#D1FAE5",
     width: (screen.width / 3),
     height: 35,
@@ -357,10 +339,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter-SemiBold',
     color: '#000',
     textAlign: 'center',
-  },
-  challengeCardSelected: {
-    borderWidth: 1,
-    borderColor: '#E60342',
   },
   challengeHeader: {
     flexDirection: 'row',
@@ -388,12 +366,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  actionButton: {
-    padding: 8,
-    backgroundColor: '#FFF7ED',
-    borderRadius: 12,
-    marginRight: 8,
-  },
   shareButton: {
     padding: 8,
     marginRight: 8,
@@ -402,7 +374,7 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   challengeContent: {
-    marginBottom: 16,
+    // marginBottom: 16,
   },
   challengePhrase: {
     fontFamily: 'Inter-SemiBold',
@@ -414,56 +386,5 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter-Regular',
     fontSize: 14,
     color: '#6B7280',
-  },
-  challengeFooter: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  searchButton: {
-    backgroundColor: '#F3F4F6',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
-  },
-  searchButtonText: {
-    fontFamily: 'Inter-Medium',
-    fontSize: 12,
-    color: '#6B7280',
-  },
-  challengeButtons: {
-    flexDirection: 'row',
-  },
-  wrongButton: {
-    backgroundColor: '#FEE2E2',
-    borderRadius: 24,
-    padding: 12,
-    marginRight: 8,
-  },
-  correctButton: {
-    backgroundColor: '#D1FAE5',
-    borderRadius: 24,
-    padding: 12,
-  },
-  bottomActions: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    backgroundColor: '#FFFFFF',
-    borderTopWidth: 1,
-    borderTopColor: '#E5E5E5',
-    marginTop: 20,
-  },
-  likeButton: {
-    backgroundColor: '#F3F4F6',
-    borderRadius: 24,
-    padding: 16,
-  },
-  challengeActionButton: {
-    backgroundColor: '#FFF7ED',
-    borderRadius: 24,
-    padding: 16,
   },
 });
