@@ -1,6 +1,6 @@
-import { Check, CreditCard as Edit3, Heart, Share2, Target, X } from 'lucide-react-native';
+import { Check, CreditCard as Edit3, Heart, MessageCircleHeart, Share2, Target, X } from 'lucide-react-native';
 import { useState } from 'react';
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const users = [
@@ -40,8 +40,10 @@ const challenges = [
     difficulty: 'easy'
   }
 ];
+const screen = Dimensions.get('window');
 
 export default function LearnScreen() {
+
   const [currentUser] = useState(users[1]);
   const [selectedChallenge, setSelectedChallenge] = useState<number | null>(null);
 
@@ -64,6 +66,9 @@ export default function LearnScreen() {
             <View style={styles.vsTextContainer}>
               <Text style={styles.vsText}>Scores</Text>
             </View>
+          </View>
+          <View style={styles.messageContainer}>
+            <MessageCircleHeart size={24} color="#6B7280"/>
           </View>
 
           <View style={styles.userComparison}>
@@ -167,11 +172,10 @@ const styles = StyleSheet.create({
   header: {
     paddingHorizontal: 20,
     paddingTop: 20,
-    paddingBottom: 30,
-
-
+    marginBottom: 30,
     position: 'relative',
     alignItems: 'center',
+    // backgroundColor: "red"
   },
   userComparison: {
     flexDirection: 'row',
@@ -187,8 +191,9 @@ const styles = StyleSheet.create({
     // elevation: 4,
     // minWidth: 120,
 
-    width: 120,
-    height: 120,
+    width: (screen.width / 2) - 20,
+    height: (screen.height / 5) - 10,
+
     overflow: 'hidden',
   },
   userCardRight: {
@@ -199,8 +204,8 @@ const styles = StyleSheet.create({
     // elevation: 4,
     // minWidth: 120,
 
-    width: 120,
-    height: 120,
+    width: (screen.width / 2) - 20,
+    height: (screen.height / 5) - 10,
     overflow: 'hidden',
   },
   userAvatar: {
@@ -236,11 +241,24 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: "red"
   },
+  messageContainer: {
+    position: 'absolute',
+    width: 45,
+    height: 35,
+    bottom: 20,
+    right: 20,
+    zIndex: 2,
+    backgroundColor: "#fff",
+    borderBottomRightRadius: 15,
+    borderTopLeftRadius: 15,
+    alignItems: "center",
+    justifyContent: "center"
+  },
   vsContainer: {
     position: 'absolute',
-    width: 65,
-    height: 35,
-    top: 45,
+    width: 80,
+    height: 50,
+    top: 55,
     zIndex: 2,
     backgroundColor: '#E60342',
     padding: 2,
